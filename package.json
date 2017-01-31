@@ -30,6 +30,7 @@
     "lodash": "^2.4.1"
   },
   "devDependencies": {
+    "dotenv": "^4.0.0",
     "mocha": "~1.15.1"
   }
 }
