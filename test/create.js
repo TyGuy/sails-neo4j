@@ -16,9 +16,10 @@ describe('Creating Nodes', function () {
 		adapter.registerConnection(connection,null,done);
   });
 
-	after(function() {
-		adapter.destroy("neo4j", null, nodeProps, function(err, results) {
+	afterEach(function(done) {
+		adapter.destroy("neo4j", null, { where: nodeProps }, function(err, results) {
 			if (err) { throw err; }
+			done();
 		});
 	});
 
