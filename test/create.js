@@ -1,30 +1,25 @@
 require('dotenv').config();
 
-var assert = require('assert'),
-	adapter = require('../lib/adapter.js');
+const assert = require('assert')
+const adapter = require('../lib/adapter')
+const TestHelper = require('./test_helper')
+
+let connectionName = TestHelper.connectionName
 
 describe('Creating Nodes', function () {
 	var nodeProps = { sails_neo4j_test: 1 };
 
- 	before(function(done) {
-    var connection = {
-			identity: 'neo4j',
-			username: process.env.NEO4J_USERNAME || 'neo4j',
-			password: process.env.NEO4J_PASSWORD || 'neo4j'
-		};
-
-		adapter.registerConnection(connection,null,done);
-  });
+ 	before(() => { return TestHelper.registerConnection() })
 
 	afterEach(function(done) {
-		adapter.destroy("neo4j", null, { where: nodeProps }, function(err, results) {
+		adapter.destroy(connectionName, null, { where: nodeProps }, function(err, results) {
 			if (err) { throw err; }
 			done();
 		});
 	});
 
 	it('should create one node with a property sails_neoj_test = 1', function (done) {
-		adapter.create("neo4j", null, nodeProps, function(err, results) {
+		adapter.create(connectionName, null, nodeProps, function(err, results) {
 			if (err) { throw err; }
 
 			assert.equal(results.length, 1);
@@ -39,7 +34,7 @@ describe('Creating Nodes', function () {
 	});
 
 	it('should create multiple nodes with the property sails_neoj_test = 1', function(done) {
-		adapter.createMany("neo4j", null, {props:[nodeProps,nodeProps]}, function(err, results) {
+		adapter.createMany(connectionName, null, {props:[nodeProps,nodeProps]}, function(err, results) {
 			if (err) { throw err; }
 
 			assert.equal(results.length, 2);
