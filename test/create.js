@@ -29,8 +29,10 @@ describe('Creating Nodes', function () {
 
 			assert.equal(results.length, 1);
 
-			var props = results[0].n.data;
-			assert.deepEqual(props, nodeProps);
+			var props = results[0];
+			for (let prop in nodeProps) {
+				assert.equal(props[prop], nodeProps[prop]);
+			}
 
 			done();
 		});
@@ -42,8 +44,10 @@ describe('Creating Nodes', function () {
 
 			assert.equal(results.length, 2);
 
-			var props = results[0].n.data;
-			assert.deepEqual(props, nodeProps);
+			var props = results[0];
+			for (let prop in nodeProps) {
+				assert.equal(props[prop], nodeProps[prop]);
+			}
 
 			done();
 		});
