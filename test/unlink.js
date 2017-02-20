@@ -31,14 +31,16 @@ describe('Unlinking Nodes', function () {
     })
   })
 
-	it('should unlink 2 nodes', function (done) {
-    adapter.unlink(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, _results) => {
+	it('should unlink 2 nodes, and return the unlinked 2nd node(s)', function (done) {
+    adapter.unlink(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, unlinkedNodes) => {
       if (err) { done(err) }
+      assert.equal(unlinkedNodes.length, 1)
+      assert.equal(unlinkedNodes[0].id, node2.id)
 
-      adapter.getRelatedNodes(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, results) => {
+      adapter.getRelatedNodes(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, relatedNodes) => {
         if (err) { done(err) }
 
-        assert.equal(results.length, 0)
+        assert.equal(relatedNodes.length, 0)
 
         done()
       })
