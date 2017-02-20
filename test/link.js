@@ -39,8 +39,33 @@ describe('Linking Nodes', function () {
       assert.equal(relationship.start, node1.id)
       assert.equal(relationship.end, node2.id)
       assert.equal(relationship.type, relationshipType)
+      assert(!relationship.data.lastSeen)
 
       done()
     })
 	})
+
+  describe('when the nodes have already been linked', () => {
+    beforeEach((done) => {
+      adapter.link(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, results) => {
+        relationship = results[0]
+
+        done()
+      })
+    })
+
+    it('does not link them twice, and sets the lastSeen attribute on the relationship', (done) => {
+      adapter.link(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, results) => {
+        if (err) { done(err) }
+
+        relationship = results[0]
+        assert.equal(relationship.start, node1.id)
+        assert.equal(relationship.end, node2.id)
+        assert.equal(relationship.type, relationshipType)
+        assert(relationship.data.lastSeen)
+
+        done()
+      })
+    })
+  })
 })
