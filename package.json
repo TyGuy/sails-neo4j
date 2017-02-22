@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "dotenv": "^4.0.0",
-    "mocha": "~1.15.1"
+    "mocha": "^3.0.0"
   }
 }
