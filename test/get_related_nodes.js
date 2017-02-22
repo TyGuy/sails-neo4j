@@ -42,6 +42,8 @@ describe('Getting Linked Nodes', function () {
 
       assert.equal(relatedNode.id, node2.id)
 
+      assert(relatedNode.labels)
+
       done()
     })
 	})
