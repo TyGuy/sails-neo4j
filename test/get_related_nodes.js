@@ -47,4 +47,15 @@ describe('Getting Linked Nodes', function () {
       done()
     })
 	})
+
+  it('should work without the successorParams', (done) => {
+    adapter.getRelatedNodes(connectionName, null, nodeProps1, null, {}, relationshipType, {}, (err, results) => {
+      assert.equal(results.length, 1)
+
+      relatedNode = results[0]
+      assert.equal(relatedNode.id, node2.id)
+
+      done()
+    })
+  })
 })
