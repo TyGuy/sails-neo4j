@@ -44,7 +44,9 @@ describe('Updating Nodes', function () {
 
         // call data to check props
         assert.equal(newNode.data.name, newName)
-  			// const props = newNode.data
+
+        // check to make sure 'labels' is present
+        assert(newNode.labels)
 
   			done()
   		})
@@ -71,7 +73,10 @@ describe('Updating Nodes', function () {
 
         // call data to check props
         assert.equal(newNode.data.name, newName)
-  			// const props = newNode.data
+
+        // check to make sure 'labels' is present
+        assert(newNode.labels)
+        assert.equal(newNode.labels[0], collectionName)
 
   			done()
   		})

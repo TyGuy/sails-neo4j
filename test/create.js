@@ -28,6 +28,10 @@ describe('Creating Nodes', function () {
 				assert.equal(props[prop], nodeProps[prop])
 			}
 
+      // check to make sure 'labels' is present
+      var labels = results[0].labels
+      assert(labels)
+
 			done()
 		})
 	})
@@ -49,6 +53,10 @@ describe('Creating Nodes', function () {
 			for (let prop in nodeProps) {
 				assert.equal(props[prop], nodeProps[prop])
 			}
+
+      // check to make sure 'labels' is present 
+      var labels = results[0].labels
+      assert(labels)
 
 			done()
 		})
