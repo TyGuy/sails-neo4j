@@ -29,21 +29,19 @@ describe('Getting Linked Nodes', function () {
     })
   })
 
-	it('should return the connected nodes via OUTGOING relationships', function (done) {
-    adapter.getOutNodes(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, results) => {
+	it('does NOT return connected nodes via OUTGOING relationships', function (done) {
+    adapter.getInNodes(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, results) => {
 
-      assert.equal(results.length, 1)
-      relatedNode = results[0]
-      assert.equal(relatedNode.id, node2.id)
-
+      assert.equal(results.length, 0)
       done()
     })
 	})
 
-	it('should not return the connected nodes via INCOMING relationships', function (done) {
-    adapter.getOutNodes(connectionName, null, nodeProps2, null, nodeProps1, relationshipType, {}, (err, results) => {
-
-      assert.equal(results.length, 0)
+	it('returns the connected nodes via INCOMING relationships', function (done) {
+    adapter.getInNodes(connectionName, null, nodeProps2, null, nodeProps1, relationshipType, {}, (err, results) => {
+      assert.equal(results.length, 1)
+      relatedNode = results[0]
+      assert.equal(relatedNode.id, node1.id)
 
       done()
     })
