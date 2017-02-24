@@ -29,10 +29,8 @@ describe('Linking Nodes', function () {
 	it('should link 2 nodes', function (done) {
     adapter.link(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {},
     (err, results) => {
-      if (err) {
-        console.error(err)
-        done(err)
-      }
+      if (err) { done(err) }
+
       relationship = results[0]
 
       assert(relationship.id)
@@ -44,6 +42,23 @@ describe('Linking Nodes', function () {
       done()
     })
 	})
+
+  it('should add props to the relationship if passed', (done) => {
+    const status = 'pending'
+    const relProps = { status: status }
+
+    adapter.link(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, relProps,
+    (err, results) => {
+      if (err) { done(err) }
+
+      relationship = results[0]
+
+      assert(relationship.id)
+      assert.equal(relationship.data.status, status)
+
+      done()
+    })
+  })
 
   describe('when the nodes have already been linked', () => {
     beforeEach((done) => {
