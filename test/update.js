@@ -82,4 +82,33 @@ describe('Updating Nodes', function () {
   		})
   	})
   })
+
+  describe('when matching and new params have the same keys', () => {
+    collectionName = 'users'
+
+    it('should still update to the new name', (done) => {
+      const params = { where: { name: node.data.name } }
+      const values = { name: newName }
+
+  		adapter.update(connectionName, collectionName, params, values, function(err, results) {
+  			if (err) { done(err) }
+
+        // returns 1 item
+        assert.equal(results.length, 1)
+
+        // verify saved
+        const newNode = results[0]
+        assert.equal(newNode.id, node.id)
+
+        // call data to check props
+        assert.equal(newNode.data.name, newName)
+
+        // check to make sure 'labels' is present
+        assert(newNode.labels)
+        assert.equal(newNode.labels[0], collectionName)
+
+  			done()
+  		})
+    })
+  })
 })
