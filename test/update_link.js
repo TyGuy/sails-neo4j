@@ -41,8 +41,6 @@ describe('Updating a link', function () {
       })
     })
 
-    // NOTE: this has the shortcoming of not being able to get current rel statuses...
-    // which is a problem.
     it('updates the link', (done) => {
       assert.equal(relationship.data.status, oldStatus)
 
