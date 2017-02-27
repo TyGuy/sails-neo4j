@@ -8,6 +8,7 @@ const nodeProps = TestHelper.testNodeProps
 describe('Getting Linked Nodes', function () {
   const nodeProps1 = Object.assign({}, { name: 'node1' }, nodeProps)
   const nodeProps2 = Object.assign({}, { name: 'node2' }, nodeProps)
+  const relProps = { status: 'pending' }
 
   const relationshipType = 'CONNECTED_TO'
 
@@ -21,7 +22,7 @@ describe('Getting Linked Nodes', function () {
       node1 = results1[0]
       adapter.create(connectionName, null, nodeProps2, (err, results2) => {
         node2 = results2[0]
-        adapter.link(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, results3) => {
+        adapter.link(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, relProps, (err, results3) => {
           relationship = results3[0]
           done()
         })
@@ -48,4 +49,13 @@ describe('Getting Linked Nodes', function () {
       done()
     })
 	})
+
+  it('should work with rel props', (done) => {
+    adapter.getOutNodes(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, relProps, (err, results) => {
+
+      assert.equal(results.length, 1)
+
+      done()
+    })
+  })
 })
