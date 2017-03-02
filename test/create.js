@@ -10,7 +10,7 @@ describe('Creating Nodes', function () {
  	before(() => { return TestHelper.registerConnection() })
  	afterEach(() => { return TestHelper.cleanDB() })
 
-	it('should create one node with a property sails_neoj_test = 1', function (done) {
+	it('should create one node with a property sails_neo4j_test = 1', function (done) {
 		adapter.create(connectionName, null, nodeProps, function(err, results) {
 			if (err) { throw err }
 
@@ -36,7 +36,7 @@ describe('Creating Nodes', function () {
 		})
 	})
 
-	it('should create multiple nodes with the property sails_neoj_test = 1', function(done) {
+	it('should create multiple nodes with the property sails_neo4j_test = 1', function(done) {
 		adapter.createMany(connectionName, null, {props:[nodeProps,nodeProps]}, function(err, results) {
 			if (err) { throw err }
 
@@ -54,7 +54,7 @@ describe('Creating Nodes', function () {
 				assert.equal(props[prop], nodeProps[prop])
 			}
 
-      // check to make sure 'labels' is present 
+      // check to make sure 'labels' is present
       var labels = results[0].labels
       assert(labels)
 
