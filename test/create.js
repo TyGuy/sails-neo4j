@@ -36,6 +36,22 @@ describe('Creating Nodes', function () {
 		})
 	})
 
+  describe('when given props that have json values', () => {
+    const nestedProp = { thing: { deep: 'poop' } }
+    const props = Object.assign({}, nodeProps, { nested: nestedProp })
+
+    it('should create a node, and return the props correctly', (done) => {
+  		adapter.create(connectionName, null, props, function(err, results) {
+  			if (err) { throw err }
+
+  			const nested = results[0].data.nested
+        assert.equal(nested.thing.deep, 'poop')
+
+  			done()
+  		})
+    })
+  })
+
 	it('should create multiple nodes with the property sails_neo4j_test = 1', function(done) {
 		adapter.createMany(connectionName, null, {props:[nodeProps,nodeProps]}, function(err, results) {
 			if (err) { throw err }

@@ -60,4 +60,35 @@ describe('Finding Nodes', function () {
       })
     })
   })
+
+  describe('when given nested attributes', () => {
+    let deepNode
+    const nestedProp = { thing: { deep: 'poop' } }
+    const props = Object.assign({}, nodeProps, { nested: nestedProp })
+
+    beforeEach((done) => {
+  		adapter.create(connectionName, null, props, function(err, results) {
+        if (err) { done(err) }
+
+        deepNode = results[0]
+        done()
+      })
+    })
+
+    it('finds nodes using nested props in the query', (done) => {
+      const queryParams = {
+        where: { nested: nestedProp }
+      }
+
+  		adapter.find(connectionName, null, queryParams, function(err, results) {
+        assert.equal(results.length, 1)
+        assert.equal(results[0].id, deepNode.id)
+
+        const deepAttribute = results[0].data.nested.thing.deep
+        assert.equal(deepAttribute, 'poop')
+
+        done()
+      })
+    })
+  })
 })
