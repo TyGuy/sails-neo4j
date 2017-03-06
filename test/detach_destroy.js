@@ -53,7 +53,9 @@ describe('Destroying Nodes', function () {
 		it('does not destroy nodes with existing relationships, and raises error', (done) => {
 			adapter.destroy(connectionName, null, { where: nodeProps1 }, (err, result) => {
 				if (err) {
-					assert.equal(err.fullname, 'org.neo4j.graphdb.ConstraintViolationException')
+          assert.equal(err.name, 'neo4j.ClientError')
+					assert.equal(err.neo4j.code, 'Neo.ClientError.Schema.ConstraintValidationFailed')
+
 					done()
 				} else {
 	        // shouldn't get here

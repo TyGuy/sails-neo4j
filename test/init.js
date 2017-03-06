@@ -10,7 +10,6 @@ describe('init', () => {
 
 		adapter.getConnection(connectionConfig).then((connection) => {
 			adapter.getConnection(connectionConfig).then((connectionAgain) => {
-				assert(connection.query)
 				assert.equal(connection, connectionAgain)
 
 				done()

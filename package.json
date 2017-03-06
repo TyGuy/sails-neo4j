@@ -26,7 +26,7 @@
   "dependencies": {
     "async": "0.1.22",
     "lodash": "^2.4.1",
-    "neo4j-js": "git+https://github.com/natgeo/neo4j-js.git"
+    "neo4j": "git+https://github.com/TyGuy/node-neo4j.git#v2"
   },
   "devDependencies": {
     "dotenv": "^4.0.0",
