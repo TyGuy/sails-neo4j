@@ -5,7 +5,7 @@ const adapter = require('../lib/adapter')
 const connectionName = exports.connectionName = 'neo4j'
 const testNodeProps = exports.testNodeProps = { sails_neo4j_test: 1 }
 
-const connection = {
+const connection = exports.connection = {
 	identity: connectionName,
 	username: process.env.NEO4J_USERNAME || 'neo4j',
 	password: process.env.NEO4J_PASSWORD || 'neo4j'
