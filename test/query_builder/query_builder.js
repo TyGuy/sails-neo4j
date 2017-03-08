@@ -112,5 +112,27 @@ describe('QueryBuilder', function () {
       assert(result.query.match(/RETURN n,m/))
       assert(result.query.match(/ORDER BY n\.name DESC, m\.name/))
     })
+
+    it('works with ordering and limiting', () => {
+      const queryBuilder = new QueryBuilder()
+      const matches = [
+        { type: 'node', ref: 'n', labels: ['users']},
+        { type: 'node', ref: 'm' },
+      ]
+      const orders = [
+        { ref: 'n', prop: 'name', order: 'desc' },
+        { ref: 'm', prop: 'name' }
+      ]
+      const limit = 20
+
+      const result = queryBuilder.match(matches).returns('n,m').order(orders).limit(limit).toQuery()
+
+      assert(result.query.match(/MATCH \(n\:users\),/))
+      assert(result.query.match(/MATCH \(m\)/))
+      assert(result.query.match(/RETURN n,m/))
+      assert(result.query.match(/ORDER BY n\.name DESC, m\.name/))
+      assert(result.query.match(/LIMIT 20/))
+
+    })
   })
 })

@@ -59,6 +59,23 @@ describe('Finding Nodes', function () {
         done()
       })
     })
+
+    describe('when given limit option', () => {
+      it('should order them and limit to the limit', (done) => {
+        const queryParams = {
+          where: { sails_neo4j_test: 1 },
+          sort: [ { rank: 'ASC' } ],
+          limit: 1
+        }
+
+        adapter.find(connectionName, null, queryParams, (err, results) => {
+          assert.equal(results.length, 1)
+          assert.equal(results[0].id, node2.id)
+
+          done()
+        })
+      })
+    })
   })
 
   describe('when given nested attributes', () => {
