@@ -28,7 +28,7 @@ describe('Updating Nodes', function () {
     collectionName = null
 
   	it('should update one node to have the new name', function (done) {
-      const params = { where: { id: node.id } }
+      const params = { where: { name: node.data.name } }
       const values = { name: newName }
   		adapter.update(connectionName, collectionName, params, values, function(err, results) {
   			if (err) {
@@ -40,7 +40,7 @@ describe('Updating Nodes', function () {
 
   			// verify saved
   			const newNode = results[0]
-  			assert.equal(newNode.id, node.id)
+  			assert.equal(newNode._id, node._id)
 
         // call data to check props
         assert.equal(newNode.data.name, newName)
@@ -57,7 +57,7 @@ describe('Updating Nodes', function () {
     collectionName = 'users'
 
   	it('should update one node to have the new name', function (done) {
-      const params = { where: { id: node.id } }
+      const params = { where: { name: node.data.name } }
       const values = { name: newName }
   		adapter.update(connectionName, collectionName, params, values, function(err, results) {
   			if (err) {
@@ -69,7 +69,7 @@ describe('Updating Nodes', function () {
 
   			// verify saved
   			const newNode = results[0]
-  			assert.equal(newNode.id, node.id)
+  			assert.equal(newNode._id, node._id)
 
         // call data to check props
         assert.equal(newNode.data.name, newName)
@@ -98,7 +98,7 @@ describe('Updating Nodes', function () {
 
         // verify saved
         const newNode = results[0]
-        assert.equal(newNode.id, node.id)
+        assert.equal(newNode._id, node._id)
 
         // call data to check props
         assert.equal(newNode.data.name, newName)

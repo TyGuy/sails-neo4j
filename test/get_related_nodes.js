@@ -40,7 +40,7 @@ describe('Getting Linked Nodes', function () {
 
       relatedNode = results[0]
 
-      assert.equal(relatedNode.id, node2.id)
+      assert.equal(relatedNode._id, node2._id)
 
       assert(relatedNode.labels)
 
@@ -53,7 +53,7 @@ describe('Getting Linked Nodes', function () {
       assert.equal(results.length, 1)
 
       relatedNode = results[0]
-      assert.equal(relatedNode.id, node2.id)
+      assert.equal(relatedNode._id, node2._id)
 
       done()
     })

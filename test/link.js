@@ -33,9 +33,9 @@ describe('Linking Nodes', function () {
 
       relationship = results[0]
 
-      assert(relationship.id)
-      assert.equal(relationship._fromId, node1.id)
-      assert.equal(relationship._toId, node2.id)
+      assert(relationship._id)
+      assert.equal(relationship._fromId, node1._id)
+      assert.equal(relationship._toId, node2._id)
       assert.equal(relationship.type, relationshipType)
       assert(!relationship.data.lastSeen)
 
@@ -53,7 +53,7 @@ describe('Linking Nodes', function () {
 
       relationship = results[0]
 
-      assert(relationship.id)
+      assert(relationship._id)
       assert.equal(relationship.data.status, status)
 
       done()
@@ -74,8 +74,8 @@ describe('Linking Nodes', function () {
         if (err) { done(err) }
 
         relationship = results[0]
-        assert.equal(relationship._fromId, node1.id)
-        assert.equal(relationship._toId, node2.id)
+        assert.equal(relationship._fromId, node1._id)
+        assert.equal(relationship._toId, node2._id)
         assert.equal(relationship.type, relationshipType)
         assert(relationship.data.lastSeen)
 

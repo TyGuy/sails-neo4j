@@ -40,7 +40,7 @@ describe('Unlinking Nodes', function () {
       adapter.unlink(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, unlinkedNodes) => {
         if (err) { done(err) }
         assert.equal(unlinkedNodes.length, 1)
-        assert.equal(unlinkedNodes[0].id, node2.id)
+        assert.equal(unlinkedNodes[0]._id, node2._id)
 
         adapter.getRelatedNodes(connectionName, null, nodeProps1, null, nodeProps2, relationshipType, {}, (err, relatedNodes) => {
           if (err) { done(err) }

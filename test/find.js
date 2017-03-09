@@ -37,8 +37,8 @@ describe('Finding Nodes', function () {
 
     adapter.find(connectionName, null, queryParams, (err, results) => {
       assert.equal(results.length, 2)
-      assert.equal(results[0].id, node1.id)
-      assert.equal(results[1].id, node2.id)
+      assert.equal(results[0]._id, node1._id)
+      assert.equal(results[1]._id, node2._id)
 
       done()
     })
@@ -53,8 +53,8 @@ describe('Finding Nodes', function () {
 
       adapter.find(connectionName, null, queryParams, (err, results) => {
         assert.equal(results.length, 2)
-        assert.equal(results[0].id, node2.id)
-        assert.equal(results[1].id, node1.id)
+        assert.equal(results[0]._id, node2._id)
+        assert.equal(results[1]._id, node1._id)
 
         done()
       })
@@ -70,7 +70,7 @@ describe('Finding Nodes', function () {
 
         adapter.find(connectionName, null, queryParams, (err, results) => {
           assert.equal(results.length, 1)
-          assert.equal(results[0].id, node2.id)
+          assert.equal(results[0]._id, node2._id)
 
           done()
         })
@@ -99,7 +99,7 @@ describe('Finding Nodes', function () {
 
   		adapter.find(connectionName, null, queryParams, function(err, results) {
         assert.equal(results.length, 1)
-        assert.equal(results[0].id, deepNode.id)
+        assert.equal(results[0]._id, deepNode._id)
 
         const deepAttribute = results[0].data.nested.thing.deep
         assert.equal(deepAttribute, 'poop')

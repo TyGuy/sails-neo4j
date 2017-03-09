@@ -19,7 +19,7 @@ describe('Creating Nodes', function () {
 
 			// verify saved
 			const node = results[0]
-			assert(node.id)
+			assert(node._id)
 
       // call data to check props
 			var props = results[0].data
@@ -60,8 +60,8 @@ describe('Creating Nodes', function () {
 			assert.equal(results.length, 2)
 
 			// check ids
-			assert(results[0].id)
-			assert(results[1].id)
+			assert(results[0]._id)
+			assert(results[1]._id)
 
       // spot-check props
 			var props = results[0].data

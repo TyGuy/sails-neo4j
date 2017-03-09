@@ -41,7 +41,7 @@ describe('Getting Linked Nodes', function () {
     adapter.getInNodes(connectionName, null, nodeProps2, null, nodeProps1, relationshipType, {}, (err, results) => {
       assert.equal(results.length, 1)
       relatedNode = results[0]
-      assert.equal(relatedNode.id, node1.id)
+      assert.equal(relatedNode._id, node1._id)
 
       done()
     })

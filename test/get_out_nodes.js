@@ -43,8 +43,8 @@ describe('Getting Linked Nodes', function () {
     adapter.getOutNodes(connectionName, null, nodeProps1, null, {}, relationshipType, {}, (err, results) => {
 
       assert.equal(results.length, 2)
-      assert.equal(results[0].id, node3.id)
-      assert.equal(results[1].id, node2.id)
+      assert.equal(results[0]._id, node3._id)
+      assert.equal(results[1]._id, node2._id)
 
       done()
     })
@@ -55,8 +55,8 @@ describe('Getting Linked Nodes', function () {
       adapter.getOutNodes(connectionName, null, nodeProps1, null, { sort: [{ name: 'asc' }] }, relationshipType, {}, (err, results) => {
 
         assert.equal(results.length, 2)
-        assert.equal(results[0].id, node2.id)
-        assert.equal(results[1].id, node3.id)
+        assert.equal(results[0]._id, node2._id)
+        assert.equal(results[1]._id, node3._id)
 
         done()
       })

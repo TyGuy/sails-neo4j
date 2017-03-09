@@ -39,7 +39,7 @@ describe('Retrieving links', function () {
         if (err) { done(err) }
 
         const newRelationship = results[0]
-        assert.equal(newRelationship.id, relationship.id)
+        assert.equal(newRelationship._id, relationship._id)
         assert.equal(newRelationship.data.status, statusProp)
 
         done()
@@ -51,7 +51,7 @@ describe('Retrieving links', function () {
         if (err) { done(err) }
 
         const newRelationship = results[0]
-        assert.equal(newRelationship.id, relationship.id)
+        assert.equal(newRelationship._id, relationship._id)
         assert.equal(newRelationship.data.status, statusProp)
 
         done()
@@ -74,7 +74,7 @@ describe('Retrieving links', function () {
         if (err) { done(err) }
 
         const newRelationship = results[0]
-        assert.equal(newRelationship.id, relationship.id)
+        assert.equal(newRelationship._id, relationship._id)
         assert.equal(newRelationship.data.status, statusProp)
 
         done()
@@ -88,7 +88,7 @@ describe('Retrieving links', function () {
         if (err) { done(err) }
 
         const newRelationship = results[0]
-        assert.equal(newRelationship.id, relationship.id)
+        assert.equal(newRelationship._id, relationship._id)
         assert.equal(newRelationship.data.status, statusProp)
 
         done()
@@ -111,7 +111,7 @@ describe('Retrieving links', function () {
         if (err) { done(err) }
 
         const newRelationship = results[0]
-        assert.equal(newRelationship.id, relationship.id)
+        assert.equal(newRelationship._id, relationship._id)
         assert.equal(newRelationship.data.status, statusProp)
 
         done()
