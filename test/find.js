@@ -123,4 +123,53 @@ describe('Finding Nodes', function () {
       })
     })
   })
+
+  describe('when given criteria with AND', () => {
+    it('returns only the correct node', (done) => {
+      const queryParams = {
+        where: {
+          and: [
+            { rank: { '>': 1 } },
+            { name: 'node1' }
+          ]
+        }
+      }
+
+      adapter.find(connectionName, null, queryParams, (err, results) => {
+        assert.equal(results.length, 1)
+        assert.equal(results[0]._id, node1._id)
+
+        done()
+      })
+    })
+  })
+
+  describe('when given nested criteria with OR', () => {
+    it('works', (done) => {
+      const queryParams = {
+        where: {
+          or: [
+            {
+              and: [
+                { rank: { '>': 1 } },
+                { name: 'node1' }
+              ]
+            },
+            {
+              and: [
+                { name: 'node2' }
+              ]
+            }
+          ]
+        }
+      }
+
+
+      adapter.find(connectionName, null, queryParams, (err, results) => {
+        assert.equal(results.length, 2)
+
+        done()
+      })
+    })
+  })
 })
