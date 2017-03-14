@@ -108,4 +108,19 @@ describe('Finding Nodes', function () {
       })
     })
   })
+
+  describe('when given > or <', () => {
+    it('only returns correct nodes', (done) => {
+      const queryParams = {
+        where: { rank: { '>': 1 } }
+      }
+
+      adapter.find(connectionName, null, queryParams, (err, results) => {
+        assert.equal(results.length, 1)
+        assert.equal(results[0]._id, node1._id)
+
+        done()
+      })
+    })
+  })
 })
