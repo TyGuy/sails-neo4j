@@ -105,7 +105,7 @@ describe('QueryBuilder', function () {
         { ref: 'm', prop: 'name' }
       ]
 
-      const result = queryBuilder.match(matches).returns('n,m').order(orders).toQuery()
+      const result = queryBuilder.match(matches[0]).match(matches[1]).returns('n,m').order(orders).toQuery()
 
       assert(result.query.match(/MATCH \(n\:users\),/))
       assert(result.query.match(/MATCH \(m\)/))
@@ -125,7 +125,7 @@ describe('QueryBuilder', function () {
       ]
       const limit = 20
 
-      const result = queryBuilder.match(matches).returns('n,m').order(orders).limit(limit).toQuery()
+      const result = queryBuilder.match(matches[0]).match(matches[1]).returns('n,m').order(orders).limit(limit).toQuery()
 
       assert(result.query.match(/MATCH \(n\:users\),/))
       assert(result.query.match(/MATCH \(m\)/))
@@ -133,6 +133,27 @@ describe('QueryBuilder', function () {
       assert(result.query.match(/ORDER BY n\.name DESC, m\.name/))
       assert(result.query.match(/LIMIT 20/))
 
+    })
+
+    it('works with an array of matches', () => {
+      // NOTE: order matters here
+      const matches = [
+        { type: 'node', ref: 'e', labels: ['elves'] },
+        { type: 'rel', ref: 'r1', direction: 'out', labels: ['LIVES_IN'] },
+        { type: 'node', ref: 'rs', labels: ['realm_sectors'] },
+        { type: 'rel', ref: 'r2', direction: null, labels: ['PART_OF'] },
+        { type: 'node', ref: 'u', labels: ['universes'] }
+      ]
+      const wheres = {
+        e: { name: 'Elrond' },
+        u: { name: 'The One' }
+      }
+
+      const queryBuilder = new QueryBuilder()
+      const query = queryBuilder.match(matches).where(wheres).returns(['rs', 'u']).toQuery()
+
+      const expectation = query.query.includes("(e:elves)-[r1:LIVES_IN]->(rs:realm_sectors)-[r2:PART_OF]-(u:universes)")
+      assert(expectation)
     })
   })
 })
