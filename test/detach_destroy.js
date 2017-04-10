@@ -84,5 +84,25 @@ describe('Destroying Nodes', function () {
 				done(err)
 			})
 		})
+
+    it('works without the where part', (done) => {
+			let expectNode1 = expectExist(nodeProps1, true)
+			let expectNode2 = expectExist(nodeProps2, true)
+
+			Promise.all([expectNode1, expectNode2]).then(() => {
+				adapter.detachDestroy(connectionName, null, nodeProps1, (err, result) => {
+					let expectNotNode1 = expectExist(nodeProps1, false)
+					let expectNode2 = expectExist(nodeProps2, true)
+
+					Promise.all([expectNotNode1, expectNode2]).then(() => {
+						done()
+					})
+				})
+			}).catch((err) => {
+				console.error(err)
+				done(err)
+			})
+
+    })
 	})
 });
