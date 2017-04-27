@@ -7,13 +7,14 @@ const nodeProps = TestHelper.testNodeProps
 
 const nodeProps1 = Object.assign({}, { name: 'node1', rank: 2 }, nodeProps)
 const nodeProps2 = Object.assign({}, { name: 'node2', rank: 1 }, nodeProps)
+const nodeProps3 = Object.assign({}, { name: 'node3', rank: 3 }, nodeProps)
 
 describe('Finding Nodes', function () {
 
  	before(() => { return TestHelper.registerConnection() })
  	afterEach(() => { return TestHelper.cleanDB() })
 
-  let node1, node2
+  let node1, node2, node3
 
   beforeEach((done) => {
 		adapter.create(connectionName, null, nodeProps1, function(err, results1) {
@@ -25,7 +26,14 @@ describe('Finding Nodes', function () {
 
         node2 = results2[0]
 
-        done()
+    		adapter.create(connectionName, null, nodeProps3, function(err, results3) {
+          if (err) { done(err) }
+
+          node3 = results3[0]
+
+          done()
+        })
+
       })
     })
   })
@@ -36,9 +44,13 @@ describe('Finding Nodes', function () {
     }
 
     adapter.find(connectionName, null, queryParams, (err, results) => {
-      assert.equal(results.length, 2)
-      assert.equal(results[0]._id, node1._id)
-      assert.equal(results[1]._id, node2._id)
+      assert.equal(results.length, 3)
+
+      expectedIds = [node1._id, node2._id, node3._id]
+
+      results.forEach((res) => {
+        assert(expectedIds.includes(res._id))
+      })
 
       done()
     })
@@ -52,9 +64,10 @@ describe('Finding Nodes', function () {
       }
 
       adapter.find(connectionName, null, queryParams, (err, results) => {
-        assert.equal(results.length, 2)
+        assert.equal(results.length, 3)
         assert.equal(results[0]._id, node2._id)
         assert.equal(results[1]._id, node1._id)
+        assert.equal(results[2]._id, node3._id)
 
         done()
       })
@@ -112,12 +125,12 @@ describe('Finding Nodes', function () {
   describe('when given > or <', () => {
     it('only returns correct nodes', (done) => {
       const queryParams = {
-        where: { rank: { '>': 1 } }
+        where: { rank: { '>': 2 } }
       }
 
       adapter.find(connectionName, null, queryParams, (err, results) => {
         assert.equal(results.length, 1)
-        assert.equal(results[0]._id, node1._id)
+        assert.equal(results[0]._id, node3._id)
 
         done()
       })
@@ -167,6 +180,24 @@ describe('Finding Nodes', function () {
 
       adapter.find(connectionName, null, queryParams, (err, results) => {
         assert.equal(results.length, 2)
+
+        done()
+      })
+    })
+  })
+
+  describe('when given IN and an array of values for a prop', () => {
+    it('works', (done) => {
+      const queryParams = { where: { rank: { in: [1, 2] } } }
+
+      adapter.find(connectionName, null, queryParams, (err, results) => {
+        if (err) { return done(err) }
+
+        assert.equal(results.length, 2)
+        const ids = results.map((res) => res._id)
+
+        assert(ids.includes(node1._id))
+        assert(ids.includes(node2._id))
 
         done()
       })
