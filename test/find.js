@@ -7,7 +7,7 @@ const nodeProps = TestHelper.testNodeProps
 
 const nodeProps1 = Object.assign({}, { name: 'node1', rank: 2 }, nodeProps)
 const nodeProps2 = Object.assign({}, { name: 'node2', rank: 1 }, nodeProps)
-const nodeProps3 = Object.assign({}, { name: 'node3', rank: 3 }, nodeProps)
+const nodeProps3 = Object.assign({}, { name: 'node3', rank: 3, extraProp: 'yep' }, nodeProps)
 
 describe('Finding Nodes', function () {
 
@@ -201,6 +201,41 @@ describe('Finding Nodes', function () {
 
         done()
       })
+    })
+  })
+
+  describe('query with EXISTS', () => {
+    it('returns nodes with that attribute', (done) => {
+      const queryParams = { where: { extraProp: { 'exists': true } } }
+
+      adapter.find(connectionName, null, queryParams, (err, results) => {
+        if (err) { return done(err) }
+
+        assert.equal(results.length, 1)
+        assert(results[0]._id === node3._id)
+
+        done()
+      })
+
+    })
+  })
+
+  describe('query with NOT EXISTS', () => {
+    it('returns nodes without that attribute', (done) => {
+      const queryParams = { where: { extraProp: { 'exists': false } } }
+
+      adapter.find(connectionName, null, queryParams, (err, results) => {
+        if (err) { return done(err) }
+
+        assert.equal(results.length, 2)
+        const ids = results.map((res) => res._id)
+
+        assert(ids.includes(node1._id))
+        assert(ids.includes(node2._id))
+
+        done()
+      })
+
     })
   })
 })
